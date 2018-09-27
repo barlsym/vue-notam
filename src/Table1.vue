@@ -4,41 +4,41 @@
       <!-- User Interface controls -->
       <b-row>
         <b-col md="6" class="my-1">
-          <b-form-group horizontal label="Filter" class="mb-0">
+          <b-form-group horizontal label="Filtre" class="mb-0">
             <b-input-group>
-              <b-form-input v-model="filter" placeholder="Type to Search"/>
+              <b-form-input v-model="filter" placeholder="Arama metni"/>
               <b-input-group-append>
-                <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                <b-btn :disabled="!filter" @click="filter = ''">Temizle</b-btn>
               </b-input-group-append>
             </b-input-group>
           </b-form-group>
         </b-col>
         <b-col md="6" class="my-1">
-          <b-form-group horizontal label="Sort" class="mb-0">
+          <b-form-group horizontal label="Sırala" class="mb-0">
             <b-input-group>
               <b-form-select v-model="sortBy" :options="sortOptions">
-                <option slot="first" :value="null">-- none --</option>
+                <option slot="first" :value="null">----</option>
               </b-form-select>
               <b-form-select :disabled="!sortBy" v-model="sortDesc" slot="append">
-                <option :value="false">Asc</option>
-                <option :value="true">Desc</option>
+                <option :value="false">Azalan</option>
+                <option :value="true">Artan</option>
               </b-form-select>
             </b-input-group>
           </b-form-group>
         </b-col>
         <b-col md="6" class="my-1">
-          <b-form-group horizontal label="Sort direction" class="mb-0">
+          <b-form-group horizontal label="Sıralama yönü" class="mb-0">
             <b-input-group>
               <b-form-select v-model="sortDirection" slot="append">
-                <option value="asc">Asc</option>
-                <option value="desc">Desc</option>
-                <option value="last">Last</option>
+                <option value="asc">Azalan</option>
+                <option value="desc">Artan</option>
+                <option value="last">Sonuncu</option>
               </b-form-select>
             </b-input-group>
           </b-form-group>
         </b-col>
         <b-col md="6" class="my-1">
-          <b-form-group horizontal label="Per page" class="mb-0">
+          <b-form-group horizontal label="Her sayfada" class="mb-0">
             <b-form-select :options="pageOptions" v-model="perPage"/>
           </b-form-group>
         </b-col>
@@ -57,15 +57,15 @@
                :sort-direction="sortDirection"
                @filtered="onFiltered"
       >
-        <template slot="name" slot-scope="row">{{row.value.first}} {{row.value.last}}</template>
-        <template slot="isActive" slot-scope="row">{{row.value?'Yes :)':'No :('}}</template>
-        <template slot="actions" slot-scope="row">
+        <template slot="notam_no" slot-scope="row">{{row.value}}</template>
+        <template slot="notam_tipi" slot-scope="row">{{row.value}}</template>
+        <template slot="islemler" slot-scope="row">
           <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
           <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
-            Info modal
+            Model Bilgisi
           </b-button>
           <b-button size="sm" @click.stop="row.toggleDetails">
-            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+            Detayları {{ row.detailsShowing ? 'Sakla' : 'Göster' }}
           </b-button>
         </template>
         <template slot="row-details" slot-scope="row">
@@ -97,28 +97,18 @@
   import 'bootstrap-vue/dist/bootstrap-vue.css'
 
   const items = [
-    {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},
-    {isActive: false, age: 21, name: {first: 'Larsen', last: 'Shaw'}},
-    {
-      isActive: false,
-      age: 9,
-      name: {first: 'Mini', last: 'Navarro'},
-      _rowVariant: 'success'
-    },
-    {isActive: false, age: 89, name: {first: 'Geneva', last: 'Wilson'}},
-    {isActive: true, age: 38, name: {first: 'Jami', last: 'Carney'}},
-    {isActive: false, age: 27, name: {first: 'Essie', last: 'Dunlap'}},
-    {isActive: true, age: 40, name: {first: 'Thor', last: 'Macdonald'}},
-    {
-      isActive: true,
-      age: 87,
-      name: {first: 'Larsen', last: 'Shaw'},
-      _cellVariants: {age: 'danger', isActive: 'warning'}
-    },
-    {isActive: false, age: 26, name: {first: 'Mitzi', last: 'Navarro'}},
-    {isActive: false, age: 22, name: {first: 'Genevieve', last: 'Wilson'}},
-    {isActive: true, age: 38, name: {first: 'John', last: 'Carney'}},
-    {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}}
+    {notam_tipi: 'Saha', validity_start: "01 Nisan 2018 21:05", notam_no: 'G3304/06'},
+    {notam_tipi: 'Meydan', validity_start: "01 Nisan 2018 22:07", notam_no: 'G3333/05'},
+    {notam_tipi: 'Meydan', validity_start: "02 Nisan 2018 05:00", notam_no: 'G7896/07'},
+    {notam_tipi: 'Saha', validity_start: "02 Nisan 2018 06:00", notam_no: 'A2345/05'},
+    {notam_tipi: 'Saha', validity_start: "03 Nisan 2018 07:00", notam_no: 'A1111/06'},
+    {notam_tipi: 'Saha', validity_start: "03 Nisan 2018 08:00", notam_no: 'A1234/05'},
+    {notam_tipi: 'Meydan', validity_start: "03 Nisan 2018 12:30", notam_no: 'G1567/07'},
+    {notam_tipi: 'Meydan', validity_start: "03  Nisan 2018 03:55", notam_no: 'G2765/05'},
+    {notam_tipi: 'Meydan', validity_start: "04 Nisan 2018 16:40", notam_no: 'G3409/09'},
+    {notam_tipi: 'Meydan', validity_start: "04 Nisan 2018 07:30", notam_no: 'G1234/09'},
+    {notam_tipi: 'Meydan', validity_start: "04 Nisan 2018 09:45", notam_no: 'G3421/07'},
+    {notam_tipi: 'Meydan', validity_start: "05 Nisan 2018 20:00", notam_no: 'G5432/04',}
   ]
 
   export default {
@@ -127,10 +117,10 @@
       return {
         items: items,
         fields: [
-          {key: 'name', label: 'Person Full name', sortable: true, sortDirection: 'desc'},
-          {key: 'age', label: 'Person age', sortable: true, 'class': 'text-center'},
-          {key: 'isActive', label: 'is Active'},
-          {key: 'actions', label: 'Actions'}
+          {key: 'notam_no', label: 'NOTAM NO', sortable: true, sortDirection: 'desc'},
+          {key: 'validity_start', label: 'Geçerlilik Başlangıcı', sortable: true, 'class': 'text-center'},
+          {key: 'notam_tipi', label: 'NOTAM Tipi', sortable: true},
+          {key: 'islemler', label: 'İşlemler'}
         ],
         currentPage: 1,
         perPage: 5,
@@ -155,7 +145,7 @@
     },
     methods: {
       info(item, index, button) {
-        this.modalInfo.title = `Row index: ${index}`
+        this.modalInfo.title = `Sıra no: ${index}`
         this.modalInfo.content = JSON.stringify(item, null, 2)
         this.$root.$emit('bv::show::modal', 'modalInfo', button)
       },
