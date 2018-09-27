@@ -6,6 +6,6 @@ import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 
 new Vue({
-  el: '#app2',
-  render: h => h(App)
+  el: '#app',
+  render: h => h(Table1)
 })
